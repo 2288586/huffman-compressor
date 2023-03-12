@@ -10,6 +10,8 @@ public class HuffmanCompressor {
 
         try {
             HashMap<Character, Integer> characterCount = CharacterCounter.count(decompressedFile);
+            Node rootNode = TreeBuilder.build(characterCount);
+
         } catch (Exception exception) {
             throw new Exception("Failed to compress '" + decompressedFile + "' file due to '" + exception.getMessage() + "'.");
         }
