@@ -1,3 +1,5 @@
+import com.sun.source.tree.Tree;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,6 +36,8 @@ public class HuffmanCompressor {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             FileWriter fileWriter = new FileWriter(compressedFile);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            TreeBuilder.serialize(bufferedWriter, rootNode);
 
             int currentCharacterCode;
             Character currentCharacterValue;

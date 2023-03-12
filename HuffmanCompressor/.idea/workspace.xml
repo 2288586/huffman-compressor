@@ -124,22 +124,11 @@
       <workItem from="1678600536508" duration="3625000" />
       <workItem from="1678604953894" duration="8388000" />
       <workItem from="1678649541026" duration="1346000" />
-      <workItem from="1678650995107" duration="957000" />
+      <workItem from="1678650995107" duration="1982000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/HuffmanCompressor.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

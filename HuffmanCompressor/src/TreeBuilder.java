@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,5 +78,42 @@ public class TreeBuilder {
         }
 
         return characterCode;
+    }
+
+    public static void serialize(Writer writer, Node rootNode) throws IOException {
+        HashMap<Character, ArrayList<Integer>> characterCode = new HashMap<>();
+        LinkedList<Integer> currentPath = new LinkedList<>();
+
+        HashSet<Node> processedNodes = new HashSet<>();
+        Node currentNode = rootNode;
+
+        while (currentNode != null) {
+            processedNodes.add(currentNode);
+
+            if (currentNode instanceof CharacterNode) {
+                CharacterNode currentCharacterNode = (CharacterNode) currentNode;
+                writer.write(currentCharacterNode.character);
+                writer.write('|');
+
+                currentNode = currentNode.parentNode;
+
+            } else {
+
+                writer.write("ND");
+                writer.write('|');
+
+                if (currentNode.leftNode != null && !processedNodes.contains(currentNode.leftNode)) {
+                    currentNode = currentNode.leftNode;
+
+                } else if (currentNode.rightNode != null && !processedNodes.contains(currentNode.rightNode)) {
+                    currentNode = currentNode.rightNode;
+
+                } else {
+                    currentNode = currentNode.parentNode;
+                }
+            }
+        }
+
+        writer.write("FS");
     }
 }
