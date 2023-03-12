@@ -5,6 +5,13 @@ public class Node {
     protected Node leftNode;
     protected Node rightNode;
 
+    Node() {
+        this.weight = 0;
+        this.parentNode = null;
+        this.leftNode = null;
+        this.rightNode = null;
+    }
+
     Node(int weight, Node parentNode, Node leftNode, Node rightNode) {
         this.weight = weight;
         this.parentNode = parentNode;

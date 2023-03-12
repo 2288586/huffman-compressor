@@ -1,5 +1,3 @@
-import com.sun.source.tree.Tree;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,7 +7,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 public class HuffmanCompressor {
 
@@ -23,14 +20,14 @@ public class HuffmanCompressor {
             Node rootNode = TreeBuilder.build(characterCount);
             HashMap<Character, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
 
-            writeToFile(decompressedFile, compressedFile, rootNode, characterCode);
+            compressToFile(decompressedFile, compressedFile, rootNode, characterCode);
 
         } catch (Exception exception) {
             throw new Exception("Failed to compress '" + decompressedFile + "' file due to '" + exception.getMessage() + "'.");
         }
     }
 
-    private static void writeToFile(File decompressedFile, File compressedFile, Node rootNode, HashMap<Character, ArrayList<Integer>> characterCode) throws Exception {
+    private static void compressToFile(File decompressedFile, File compressedFile, Node rootNode, HashMap<Character, ArrayList<Integer>> characterCode) throws Exception {
         try {
             FileReader fileReader = new FileReader(decompressedFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -86,9 +83,39 @@ public class HuffmanCompressor {
         }
     }
 
-    public static void decompress(File compressedFile, File decompressedFile) {
+    public static void decompress(File compressedFile, File decompressedFile) throws Exception {
         if (compressedFile == null || decompressedFile == null) {
             throw new IllegalArgumentException("Input and output file must be specified.");
+        }
+
+        try {
+            decompressToFile(compressedFile, decompressedFile);
+
+        } catch (Exception exception) {
+            throw new Exception("Failed to decompress '" + compressedFile + "' file due to '" + exception.getMessage() + "'.");
+        }
+    }
+
+    private static void decompressToFile(File compressedFile, File decompressedFile) throws Exception {
+        try {
+            FileReader fileReader = new FileReader(compressedFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileWriter fileWriter = new FileWriter(decompressedFile);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+            Node rootNode = TreeBuilder.deserialize(bufferedReader);
+            System.out.println(rootNode);
+
+            bufferedWriter.close();
+            fileWriter.close();
+            bufferedReader.close();
+            fileReader.close();
+
+        } catch (FileNotFoundException exception) {
+            throw new IllegalArgumentException("File was not found.");
+
+        } catch (Exception exception) {
+            throw new Exception("Failed to compress '" + compressedFile + "' file due to '" + exception.getMessage() + "'.");
         }
     }
 }

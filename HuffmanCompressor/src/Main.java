@@ -15,7 +15,13 @@ public class Main {
             }
 
         } else if (args[0].equals("-decompress")) {
-            HuffmanCompressor.decompress(inputFile, outputFile);
+
+            try {
+                HuffmanCompressor.decompress(inputFile, outputFile);
+            } catch (Exception exception) {
+                System.out.println(exception.getMessage());
+            }
+
         }
     }
 }

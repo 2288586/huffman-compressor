@@ -80,7 +80,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in HuffmanCompressor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in HuffmanCompressor" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="HuffmanCompressor" />
       <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
         <option name="credential" />
@@ -103,7 +103,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainCompress" />
-        <item itemvalue="JUnit.All in HuffmanCompressor" />
       </list>
     </recent_temporary>
   </component>
@@ -125,6 +124,8 @@
       <workItem from="1678604953894" duration="8388000" />
       <workItem from="1678649541026" duration="1346000" />
       <workItem from="1678650995107" duration="1982000" />
+      <workItem from="1678654272829" duration="3605000" />
+      <workItem from="1678657997408" duration="4873000" />
     </task>
     <servers />
   </component>
