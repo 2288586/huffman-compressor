@@ -10,8 +10,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -53,7 +53,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in HuffmanCompressor">
+  <component name="RunManager" selected="Application.MainCompress">
     <configuration name="MainCompress" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="HuffmanCompressor" />
@@ -102,8 +102,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in HuffmanCompressor" />
         <item itemvalue="Application.MainCompress" />
+        <item itemvalue="JUnit.All in HuffmanCompressor" />
       </list>
     </recent_temporary>
   </component>
@@ -121,10 +121,25 @@
       <workItem from="1678595649213" duration="2158000" />
       <workItem from="1678597941031" duration="2008000" />
       <workItem from="1678599959410" duration="549000" />
+      <workItem from="1678600536508" duration="3625000" />
+      <workItem from="1678604953894" duration="8388000" />
+      <workItem from="1678649541026" duration="1346000" />
+      <workItem from="1678650995107" duration="957000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/HuffmanCompressor.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
