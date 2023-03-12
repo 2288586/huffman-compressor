@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HuffmanCompressor {
@@ -11,6 +12,7 @@ public class HuffmanCompressor {
         try {
             HashMap<Character, Integer> characterCount = CharacterCounter.count(decompressedFile);
             Node rootNode = TreeBuilder.build(characterCount);
+            HashMap<Character, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
 
         } catch (Exception exception) {
             throw new Exception("Failed to compress '" + decompressedFile + "' file due to '" + exception.getMessage() + "'.");

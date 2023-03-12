@@ -1,5 +1,5 @@
 public class CharacterNode extends Node {
-    private Character character;
+    protected Character character;
 
     CharacterNode(Character character, int weight, Node parentNode, Node leftNode, Node rightNode) {
         super(weight, parentNode, leftNode, rightNode);
