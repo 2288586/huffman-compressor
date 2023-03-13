@@ -17,7 +17,7 @@ class CodeConverterTest {
     @Test
     void convertEmptyToCode() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> CodeConverter.convertBinaryCodeToCode(new ArrayList<>()));
-        assertEquals("Binary code must be of size '32'.", exception.getMessage());
+        assertEquals("Binary code must be of size '"+ CodeConverter.CodeSize + "'.", exception.getMessage());
     }
 
     @Test

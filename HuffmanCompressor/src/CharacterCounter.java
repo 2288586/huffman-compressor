@@ -6,13 +6,14 @@ import java.util.HashMap;
 
 public class CharacterCounter {
 
-    public static HashMap<Character, Integer> count(File file) throws Exception {
+    public static CharacterCountResult count(File file) throws Exception {
 
         if (file == null) {
             throw new IllegalArgumentException("File must be specified.");
         }
 
         HashMap<Character, Integer> characterCount = new HashMap<>();
+        int totalCharacterCount = 0;
 
         try {
             FileReader fileReader = new FileReader(file);
@@ -29,6 +30,8 @@ public class CharacterCounter {
                 } else {
                     characterCount.put(characterValue, 1);
                 }
+
+                totalCharacterCount++;
             }
 
             bufferedReader.close();
@@ -41,6 +44,6 @@ public class CharacterCounter {
             throw new Exception("Failed to count characters in '" + file + "' file due to '" + exception.getMessage() + "'.");
         }
 
-        return characterCount;
+        return new CharacterCountResult(characterCount, totalCharacterCount);
     }
 }

@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,9 +26,13 @@ class CharacterCounterTest {
         File file = new File("tst/EmptyFile.txt");
 
         HashMap<Character, Integer> expectedCharacterCount = new HashMap<>();
-        HashMap<Character, Integer> actualCharacterCount = CharacterCounter.count(file);
+        CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
+
+        Map<Character, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
+        int actualTotalCharacterCount = actualCharacterCountResult.getTotalCharacterCount();
 
         assertEquals(expectedCharacterCount, actualCharacterCount);
+        assertEquals(0, actualTotalCharacterCount);
     }
 
     @Test
@@ -45,7 +50,11 @@ class CharacterCounterTest {
         expectedCharacterCount.put('.', 1);
         expectedCharacterCount.put('\n', 3);
 
-        HashMap<Character, Integer> actualCharacterCount = CharacterCounter.count(file);
+        CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
+        Map<Character, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
+        int actualTotalCharacterCount = actualCharacterCountResult.getTotalCharacterCount();
+
         assertEquals(expectedCharacterCount, actualCharacterCount);
+        assertEquals(32, actualTotalCharacterCount);
     }
 }

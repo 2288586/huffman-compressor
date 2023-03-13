@@ -11,8 +11,12 @@ import java.util.TreeSet;
 
 public class TreeBuilder {
     public static Node build(Map<Character, Integer> characterCount) {
-        if (characterCount == null || characterCount.size() == 0) {
-            return null;
+        if (characterCount == null) {
+            throw new IllegalArgumentException("Character count must be specified.");
+        }
+
+        if (characterCount.size() == 0) {
+            return new Node();
         }
 
         TreeSet<Node> nodes = new TreeSet<>((nodeOne, nodeTwo) -> {
@@ -140,6 +144,7 @@ public class TreeBuilder {
         Stack<Node> nodeTree = new Stack<>();
         Node leftNode;
         Node rightNode;
+        Node rootNode;
 
         while (true) {
             currentCharacterCodeOne = reader.read();
@@ -152,10 +157,18 @@ public class TreeBuilder {
                     return new Node();
                 }
 
+                if (nodeTree.size() == 1) {
+                    leftNode = nodeTree.pop();
+                    rootNode = new Node(0, null, leftNode, null);
+                    leftNode.setParent(rootNode);
+
+                    return rootNode;
+                }
+
                 rightNode = nodeTree.pop();
                 leftNode = nodeTree.pop();
 
-                Node rootNode = new Node(0, null, leftNode, rightNode);
+                rootNode = new Node(0, null, leftNode, rightNode);
                 leftNode.parentNode = rootNode;
                 rightNode.parentNode = rootNode;
 

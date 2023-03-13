@@ -3,7 +3,7 @@ import java.util.List;
 
 public class CodeConverter {
 
-    static final int CodeSize = 32;
+    static final int CodeSize = 8;
 
     public static int convertBinaryCodeToCode(List<Integer> binaryCode) {
         if (binaryCode == null) {

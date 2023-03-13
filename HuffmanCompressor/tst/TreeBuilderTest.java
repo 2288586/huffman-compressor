@@ -14,14 +14,14 @@ class TreeBuilderTest {
 
     @Test
     void buildNullTree() {
-        Node actualNode = TreeBuilder.build(null);
-        assertEquals(null, actualNode);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> TreeBuilder.build(null));
+        assertEquals("Character count must be specified.", exception.getMessage());
     }
 
     @Test
     void buildEmptyTree() {
         Node actualNode = TreeBuilder.build(new HashMap<>());
-        assertEquals(null, actualNode);
+        assertEquals(new Node(), actualNode);
     }
 
     @Test
