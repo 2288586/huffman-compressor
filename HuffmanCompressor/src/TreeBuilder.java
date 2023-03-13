@@ -1,6 +1,6 @@
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,8 +86,8 @@ public class TreeBuilder {
         return characterCode;
     }
 
-    public static void serialize(Writer writer, Node rootNode) throws IOException {
-        if (writer == null) {
+    public static void serialize(OutputStream outputStream, Node rootNode) throws IOException {
+        if (outputStream == null) {
             throw new IllegalArgumentException("Writer must be specified.");
         }
 
@@ -111,27 +111,27 @@ public class TreeBuilder {
 
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-                writer.write(currentCharacterNode.character);
-                writer.write('|');
+                outputStream.write(currentCharacterNode.character);
+                outputStream.write('|');
 
             } else {
                 if (currentNode.parentNode == null) {
                     break;
                 }
 
-                writer.write("ND");
-                writer.write('|');
+                outputStream.write("ND".getBytes());
+                outputStream.write('|');
             }
 
             processedNodes.add(currentNode);
             currentNode = currentNode.parentNode;
         }
 
-        writer.write("FS");
+        outputStream.write("FS".getBytes());
     }
 
-    public static Node deserialize(Reader reader) throws IOException {
-        if (reader == null) {
+    public static Node deserialize(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
             throw new IllegalArgumentException("Reader must be specified.");
         }
 
@@ -147,9 +147,9 @@ public class TreeBuilder {
         Node rootNode;
 
         while (true) {
-            currentCharacterCodeOne = reader.read();
+            currentCharacterCodeOne = inputStream.read();
             currentCharacterValueOne = Character.toString(currentCharacterCodeOne).charAt(0);
-            currentCharacterCodeTwo = reader.read();
+            currentCharacterCodeTwo = inputStream.read();
             currentCharacterValueTwo = Character.toString(currentCharacterCodeTwo).charAt(0);
 
             if (currentCharacterValueOne == 'F' && currentCharacterValueTwo == 'S') {
@@ -188,7 +188,7 @@ public class TreeBuilder {
                 rightNode.parentNode = node;
 
                 nodeTree.add(node);
-                reader.read();
+                inputStream.read();
                 continue;
             }
 

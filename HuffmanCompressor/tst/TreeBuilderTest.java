@@ -1,13 +1,13 @@
 import org.junit.jupiter.api.Test;
 
-import java.io.FileWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TreeBuilderTest {
 
@@ -96,24 +96,24 @@ class TreeBuilderTest {
     }
 
     @Test
-    void serializeNullWriter() throws IOException {
+    void serializeNullWriter() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> TreeBuilder.serialize(null, new Node()));
         assertEquals(exception.getMessage(), "Writer must be specified.");
     }
 
     @Test
     void serializeNullNode() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> TreeBuilder.serialize(new StringWriter(), null));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> TreeBuilder.serialize(new ByteArrayOutputStream(), null));
         assertEquals(exception.getMessage(), "Root node must be specified.");
     }
 
     @Test
     void serializeEmptyNode() throws IOException {
-        StringWriter stringWriter = new StringWriter();
-        TreeBuilder.serialize(stringWriter, new Node());
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        TreeBuilder.serialize(byteArrayOutputStream, new Node());
 
-        stringWriter.close();
-        assertEquals("FS", stringWriter.toString());
+        byteArrayOutputStream.close();
+        assertEquals("FS", byteArrayOutputStream.toString());
     }
 
     @Test
@@ -124,10 +124,10 @@ class TreeBuilderTest {
 
     @Test
     void deserializeEmptyNode() throws IOException {
-        StringReader stringReader = new StringReader("FS");
-        Node node = TreeBuilder.deserialize(stringReader);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("FS".getBytes());
+        Node node = TreeBuilder.deserialize(byteArrayInputStream);
 
-        stringReader.close();
+        byteArrayInputStream.close();
         assertEquals(new Node(), node);
     }
 
@@ -145,13 +145,13 @@ class TreeBuilderTest {
         nodeAC.setParent(expectedRootNode);
         nodeB.setParent(expectedRootNode);
 
-        StringWriter stringWriter = new StringWriter();
-        TreeBuilder.serialize(stringWriter, expectedRootNode);
-        stringWriter.close();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        TreeBuilder.serialize(byteArrayOutputStream, expectedRootNode);
+        byteArrayOutputStream.close();
 
-        StringReader stringReader = new StringReader(stringWriter.toString());
-        Node actualRootNode = TreeBuilder.deserialize(stringReader);
-        stringReader.close();
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+        Node actualRootNode = TreeBuilder.deserialize(byteArrayInputStream);
+        byteArrayInputStream.close();
 
         assertEquals(expectedRootNode, actualRootNode);
     }
