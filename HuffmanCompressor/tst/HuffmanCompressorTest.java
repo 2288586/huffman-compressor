@@ -38,9 +38,9 @@ class HuffmanCompressorTest {
 
     @Test
     void compressDecompressFile() throws Exception {
-        File expectedOutputFile = new File("tst/ExpectedOutputFile.txt");
-        File compressedFile = new File("tst/CompressedFile.txt");
-        File decompressedFile = new File("tst/DecompressedFile.txt");
+        File expectedOutputFile = new File("tst/HuffmanCompressorTest_InputFile.txt");
+        File compressedFile = new File("tst/HuffmanCompressorTest_CompressedFile.txt");
+        File decompressedFile = new File("tst/HuffmanCompressorTest_DecompressedFile.txt");
 
         HuffmanCompressor.compress(expectedOutputFile, compressedFile);
         HuffmanCompressor.decompress(compressedFile, decompressedFile);

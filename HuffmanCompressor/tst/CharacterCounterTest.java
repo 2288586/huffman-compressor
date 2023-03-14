@@ -24,7 +24,7 @@ class CharacterCounterTest {
 
     @Test
     void countEmptyFile() throws Exception {
-        File file = new File("tst/EmptyFile.txt");
+        File file = new File("tst/CharacterCounterTest_EmptyFile.txt");
 
         HashMap<Integer, Integer> expectedCharacterCount = new HashMap<>();
         CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
@@ -38,7 +38,7 @@ class CharacterCounterTest {
 
     @Test
     void countNonEmptyFile() throws Exception {
-        File file = new File("tst/NonEmptyFile.txt");
+        File file = new File("tst/CharacterCounterTest_NonEmptyFile.txt");
 
         HashMap<Integer, Integer> expectedCharacterCount = new HashMap<>();
         expectedCharacterCount.put(CodeConverter.getInteger(' '), 10);
