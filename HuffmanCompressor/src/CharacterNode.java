@@ -1,14 +1,14 @@
 public class CharacterNode extends Node {
-    protected Character character;
+    protected int characterCode;
 
-    CharacterNode(Character character) {
+    CharacterNode(int characterCode) {
         super();
-        this.character = character;
+        this.characterCode = characterCode;
     }
 
-    CharacterNode(Character character, int weight, Node parentNode, Node leftNode, Node rightNode) {
+    CharacterNode(int characterCode, int weight, Node parentNode, Node leftNode, Node rightNode) {
         super(weight, parentNode, leftNode, rightNode);
-        this.character = character;
+        this.characterCode = characterCode;
     }
 
     @Override
@@ -16,7 +16,7 @@ public class CharacterNode extends Node {
         if (object instanceof CharacterNode) {
             CharacterNode other = (CharacterNode) object;
 
-            if (this.character != other.character || this.weight != other.weight) {
+            if (this.characterCode != other.characterCode || this.weight != other.weight) {
                 return false;
             }
 
@@ -44,6 +44,6 @@ public class CharacterNode extends Node {
 
     @Override
     public String toString() {
-        return "Node{Character = " + character + ", Weight = " + weight + ", leftNode = " + leftNode + ", rightNode = " + rightNode + "}";
+        return "Node{Character Code = " + characterCode + ", Weight = " + weight + ", leftNode = " + leftNode + ", rightNode = " + rightNode + "}";
     }
 }

@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -10,7 +9,8 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 public class TreeBuilder {
-    public static Node build(Map<Character, Integer> characterCount) {
+
+    public static Node build(Map<Integer, Integer> characterCount) {
         if (characterCount == null) {
             throw new IllegalArgumentException("Character count must be specified.");
         }
@@ -27,8 +27,8 @@ public class TreeBuilder {
             }
         });
 
-        for (Character character : characterCount.keySet()) {
-            nodes.add(new CharacterNode(character, characterCount.get(character), null, null, null));
+        for (Integer characterCode : characterCount.keySet()) {
+            nodes.add(new CharacterNode(characterCode, characterCount.get(characterCode), null, null, null));
         }
 
         if (nodes.size() == 1) {
@@ -48,8 +48,8 @@ public class TreeBuilder {
         return nodes.pollFirst();
     }
 
-    public static HashMap<Character, ArrayList<Integer>> parse(Node rootNode) {
-        HashMap<Character, ArrayList<Integer>> characterCode = new HashMap<>();
+    public static HashMap<Integer, ArrayList<Integer>> parse(Node rootNode) {
+        HashMap<Integer, ArrayList<Integer>> characterCode = new HashMap<>();
         LinkedList<Integer> currentPath = new LinkedList<>();
 
         HashSet<Node> processedNodes = new HashSet<>();
@@ -60,7 +60,7 @@ public class TreeBuilder {
 
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-                characterCode.put(currentCharacterNode.character, new ArrayList<>(currentPath));
+                characterCode.put(currentCharacterNode.characterCode, new ArrayList<>(currentPath));
 
                 currentNode = currentNode.parentNode;
                 currentPath.removeLast();
@@ -86,7 +86,7 @@ public class TreeBuilder {
         return characterCode;
     }
 
-    public static void serialize(OutputStream outputStream, Node rootNode) throws IOException {
+    public static void serialize(OutputStream outputStream, Node rootNode) throws Exception {
         if (outputStream == null) {
             throw new IllegalArgumentException("Writer must be specified.");
         }
@@ -111,35 +111,34 @@ public class TreeBuilder {
 
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-                outputStream.write(currentCharacterNode.character);
-                outputStream.write('|');
+                outputStream.write(CodeConverter.getBytes(currentCharacterNode.characterCode));
+                outputStream.write(CodeConverter.getBytes('|'));
 
             } else {
                 if (currentNode.parentNode == null) {
                     break;
                 }
 
-                outputStream.write("ND".getBytes());
-                outputStream.write('|');
+                outputStream.write(CodeConverter.getBytes("ND"));
+                outputStream.write(CodeConverter.getBytes('|'));
             }
 
             processedNodes.add(currentNode);
             currentNode = currentNode.parentNode;
         }
 
-        outputStream.write("FS".getBytes());
+        outputStream.write(CodeConverter.getBytes("FS"));
     }
 
-    public static Node deserialize(InputStream inputStream) throws IOException {
+    public static Node deserialize(InputStream inputStream) throws Exception {
         if (inputStream == null) {
             throw new IllegalArgumentException("Reader must be specified.");
         }
 
-        int currentCharacterCodeOne;
-        int currentCharacterCodeTwo;
-
         Character currentCharacterValueOne;
         Character currentCharacterValueTwo;
+
+        byte[] characterBytes = new byte[Settings.CharacterSize];
 
         Stack<Node> nodeTree = new Stack<>();
         Node leftNode;
@@ -147,10 +146,11 @@ public class TreeBuilder {
         Node rootNode;
 
         while (true) {
-            currentCharacterCodeOne = inputStream.read();
-            currentCharacterValueOne = Character.toString(currentCharacterCodeOne).charAt(0);
-            currentCharacterCodeTwo = inputStream.read();
-            currentCharacterValueTwo = Character.toString(currentCharacterCodeTwo).charAt(0);
+            inputStream.read(characterBytes);
+            currentCharacterValueOne = CodeConverter.getCharacter(characterBytes);
+
+            inputStream.read(characterBytes);
+            currentCharacterValueTwo = CodeConverter.getCharacter(characterBytes);
 
             if (currentCharacterValueOne == 'F' && currentCharacterValueTwo == 'S') {
                 if (nodeTree.size() == 0) {
@@ -188,7 +188,7 @@ public class TreeBuilder {
                 rightNode.parentNode = node;
 
                 nodeTree.add(node);
-                inputStream.read();
+                inputStream.read(characterBytes);
                 continue;
             }
 

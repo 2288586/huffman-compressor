@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class CharacterCounter {
@@ -12,30 +14,29 @@ public class CharacterCounter {
             throw new IllegalArgumentException("File must be specified.");
         }
 
-        HashMap<Character, Integer> characterCount = new HashMap<>();
+        HashMap<Integer, Integer> characterCount = new HashMap<>();
         int totalCharacterCount = 0;
 
         try {
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            FileInputStream fileInputStream = new FileInputStream(file);
 
             int characterCode;
-            Character characterValue;
+            byte[] characterBytes = new byte[Settings.CharacterSize];
 
-            while ((characterCode = bufferedReader.read()) != -1) {
-                characterValue = Character.toString(characterCode).charAt(0);
+            while ((fileInputStream.read(characterBytes)) != -1) {
 
-                if (characterCount.containsKey(characterValue)) {
-                    characterCount.put(characterValue, characterCount.get(characterValue) + 1);
+                characterCode = CodeConverter.getInteger(characterBytes);
+                if (characterCount.containsKey(characterCode)) {
+                    characterCount.put(characterCode, characterCount.get(characterCode) + 1);
+
                 } else {
-                    characterCount.put(characterValue, 1);
+                    characterCount.put(characterCode, 1);
                 }
 
                 totalCharacterCount++;
             }
 
-            bufferedReader.close();
-            fileReader.close();
+            fileInputStream.close();
 
         } catch (FileNotFoundException exception) {
             throw new IllegalArgumentException("File '" + file + "' was not found.");

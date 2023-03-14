@@ -1,7 +1,3 @@
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,12 +16,13 @@ public class HuffmanCompressor {
 
         try {
             CharacterCountResult characterCountResult = CharacterCounter.count(decompressedFile);
-            Map<Character, Integer> characterCount = characterCountResult.getCharacterCount();
-            System.out.println(characterCount);
+            Map<Integer, Integer> characterCount = characterCountResult.getCharacterCount();
+            System.out.println("Character Count: " + characterCount);
             int totalCharacterCount = characterCountResult.getTotalCharacterCount();
+            System.out.println("Total Character Count: " + totalCharacterCount);
 
             Node rootNode = TreeBuilder.build(characterCount);
-            Map<Character, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
+            Map<Integer, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
             System.out.println(characterCode);
 
             compressToFile(decompressedFile, compressedFile, rootNode, characterCode, totalCharacterCount);
@@ -35,26 +32,22 @@ public class HuffmanCompressor {
         }
     }
 
-    private static void compressToFile(File decompressedFile, File compressedFile, Node rootNode, Map<Character, ArrayList<Integer>> characterCode, int totalCharacterCount) throws Exception {
+    private static void compressToFile(File decompressedFile, File compressedFile, Node rootNode, Map<Integer, ArrayList<Integer>> characterCode, int totalCharacterCount) throws Exception {
         try {
             FileInputStream fileInputStream = new FileInputStream(decompressedFile);
-            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(dataInputStream);
-
             FileOutputStream fileOutputStream = new FileOutputStream(compressedFile);
-            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(dataOutputStream);
 
-            TreeBuilder.serialize(bufferedOutputStream, rootNode);
-            bufferedOutputStream.write(totalCharacterCount);
+            TreeBuilder.serialize(fileOutputStream, rootNode);
+            fileOutputStream.write(CodeConverter.getBytes(totalCharacterCount));
 
             int currentCharacterCode;
-            Character currentCharacterValue;
+            byte[] currentCharacterBytes = new byte[Settings.CharacterSize];
+
             LinkedList<Integer> buffer = new LinkedList<>();
 
-            while ((currentCharacterCode = bufferedInputStream.read()) != -1) {
-                currentCharacterValue = Character.toString(currentCharacterCode).charAt(0);
-                buffer.addAll(characterCode.get(currentCharacterValue));
+            while (fileInputStream.read(currentCharacterBytes) != -1) {
+                currentCharacterCode = CodeConverter.getInteger(currentCharacterBytes);
+                buffer.addAll(characterCode.get(currentCharacterCode));
 
                 while (buffer.size() >= CodeConverter.CodeSize) {
                     ArrayList<Integer> binaryCode = new ArrayList<>(CodeConverter.CodeSize);
@@ -66,8 +59,7 @@ public class HuffmanCompressor {
                     System.out.println(binaryCode);
                     int code = CodeConverter.convertBinaryCodeToCode(binaryCode);
                     System.out.println(code);
-                    System.out.println(Character.toString(code));
-                    bufferedOutputStream.write(code);
+                    fileOutputStream.write(CodeConverter.getBytes(code));
                 }
             }
 
@@ -81,18 +73,12 @@ public class HuffmanCompressor {
                 System.out.println(buffer);
                 int code = CodeConverter.convertBinaryCodeToCode(buffer);
                 System.out.println(code);
-                System.out.println(Character.toString(code));
-                bufferedOutputStream.write(code);
+                fileOutputStream.write(CodeConverter.getBytes(code));
             }
 
-            bufferedOutputStream.write('\n');
+            fileOutputStream.write(CodeConverter.getBytes('\n'));
 
-            bufferedOutputStream.close();
-            dataOutputStream.close();
             fileOutputStream.close();
-
-            bufferedInputStream.close();
-            dataInputStream.close();
             fileInputStream.close();
 
         } catch (FileNotFoundException exception) {
@@ -119,24 +105,24 @@ public class HuffmanCompressor {
     private static void decompressToFile(File compressedFile, File decompressedFile) throws Exception {
         try {
             FileInputStream fileInputStream = new FileInputStream(compressedFile);
-            DataInputStream dataInputStream = new DataInputStream(fileInputStream);
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(dataInputStream);
-
             FileOutputStream fileOutputStream = new FileOutputStream(decompressedFile);
-            DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
-            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(dataOutputStream);
 
-            Node rootNode = TreeBuilder.deserialize(bufferedInputStream);
+            Node rootNode = TreeBuilder.deserialize(fileInputStream);
             Node currentNode = rootNode;
             System.out.println(TreeBuilder.parse(rootNode));
 
-            int totalCharacterCount = bufferedInputStream.read();
+            byte[] totalCharacterCountBytes = new byte[Settings.CharacterSize];
+            fileInputStream.read(totalCharacterCountBytes);
+            int totalCharacterCount = CodeConverter.getInteger(totalCharacterCountBytes);
+            System.out.println("Total Character Count: " + totalCharacterCount);
 
             int currentCharacterCode;
+            byte[] currentCharacterBytes = new byte[Settings.CharacterSize];
             List<Integer> currentCharacterBinaryCode;
             LinkedList<Integer> buffer = new LinkedList<>();
 
-            while ((currentCharacterCode = bufferedInputStream.read()) != -1) {
+            while ((fileInputStream.read(currentCharacterBytes)) != -1) {
+                currentCharacterCode = CodeConverter.getInteger(currentCharacterBytes);
                 currentCharacterBinaryCode = CodeConverter.convertCodeToBinaryCode(currentCharacterCode);
                 System.out.println(currentCharacterBinaryCode);
                 buffer.addAll(currentCharacterBinaryCode);
@@ -153,7 +139,7 @@ public class HuffmanCompressor {
                         if (currentNode instanceof CharacterNode) {
                             CharacterNode currentCharacterNode = (CharacterNode) currentNode;
 
-                            bufferedOutputStream.write(currentCharacterNode.character);
+                            fileOutputStream.write(CodeConverter.getBytes(currentCharacterNode.characterCode));
                             totalCharacterCount--;
 
                             if (totalCharacterCount == 0) {
@@ -166,12 +152,7 @@ public class HuffmanCompressor {
                 }
             }
 
-            bufferedOutputStream.close();
-            dataOutputStream.close();
             fileOutputStream.close();
-
-            bufferedInputStream.close();
-            dataInputStream.close();
             fileInputStream.close();
 
         } catch (FileNotFoundException exception) {

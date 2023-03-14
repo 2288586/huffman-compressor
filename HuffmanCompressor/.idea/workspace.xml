@@ -99,14 +99,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CharacterCounterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="HuffmanCompressor" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CharacterCounterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.MainDecompress" />
       <item itemvalue="Application.MainCompress" />
       <item itemvalue="JUnit.All in HuffmanCompressor" />
+      <item itemvalue="JUnit.CharacterCounterTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainCompress" />
+        <item itemvalue="JUnit.CharacterCounterTest" />
       </list>
     </recent_temporary>
   </component>
@@ -136,6 +147,7 @@
       <workItem from="1678677020681" duration="1633000" />
       <workItem from="1678735671025" duration="1941000" />
       <workItem from="1678737643462" duration="2599000" />
+      <workItem from="1678752472494" duration="3580000" />
     </task>
     <servers />
   </component>
