@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class CharacterCounter {
@@ -21,7 +18,7 @@ public class CharacterCounter {
             FileInputStream fileInputStream = new FileInputStream(file);
 
             int characterCode;
-            byte[] characterBytes = new byte[Settings.CharacterSize];
+            byte[] characterBytes = new byte[Settings.InputCharacterSize];
 
             while ((fileInputStream.read(characterBytes)) != -1) {
 

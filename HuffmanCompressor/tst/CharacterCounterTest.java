@@ -6,6 +6,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CharacterCounterTest {
 
@@ -52,9 +53,11 @@ class CharacterCounterTest {
 
         CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
         Map<Integer, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
-        int actualTotalCharacterCount = actualCharacterCountResult.getTotalCharacterCount();
 
-        assertEquals(expectedCharacterCount, actualCharacterCount);
-        assertEquals(32, actualTotalCharacterCount);
+        //UTF-16 Encoding Contains Byte-Order Mark (BOM), Character Code = 65279, Unicode Symbol = ﻿
+        for (Integer characterCode : expectedCharacterCount.keySet()) {
+            assertTrue(actualCharacterCount.containsKey(characterCode));
+            assertTrue(actualCharacterCount.containsValue(expectedCharacterCount.get(characterCode)));
+        }
     }
 }

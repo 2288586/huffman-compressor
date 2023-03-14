@@ -30,10 +30,41 @@ class CodeConverterTest {
     }
 
     @Test
-    void convertCharacterToCharacter() throws Exception {
-        char expectedResult = 'A';
-        int intermediateResult = CodeConverter.getInteger(expectedResult);
-        char actualResult = CodeConverter.getCharacter(CodeConverter.getBytes(intermediateResult));
+    void convertIntegerToInteger() {
+        int expectedResult = 22;
+        int actualResult = CodeConverter.getInteger(CodeConverter.getBytes(expectedResult));
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void convertStringToStringInputCharset() throws Exception {
+        String expectedResult = "test";
+        String actualResult = CodeConverter.getString(CodeConverter.getBytes(expectedResult, Settings.InputCharset), Settings.InputCharset);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void convertStringToStringCompressionCharset() throws Exception {
+        String expectedResult = "test";
+        String actualResult = CodeConverter.getString(CodeConverter.getBytes(expectedResult, Settings.CompressionCharset), Settings.CompressionCharset);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void convertCharacterToCharacterInputCharset() throws Exception {
+        Character expectedResult = 'A';
+        Character actualResult = CodeConverter.getCharacter(CodeConverter.getBytes(expectedResult, Settings.InputCharset), Settings.InputCharset);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void convertCharacterToCharacterCompressionCharset() throws Exception {
+        Character expectedResult = 'A';
+        Character actualResult = CodeConverter.getCharacter(CodeConverter.getBytes(expectedResult, Settings.CompressionCharset), Settings.CompressionCharset);
 
         assertEquals(expectedResult, actualResult);
     }

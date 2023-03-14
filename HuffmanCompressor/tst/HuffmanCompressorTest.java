@@ -45,7 +45,7 @@ class HuffmanCompressorTest {
         HuffmanCompressor.compress(expectedOutputFile, compressedFile);
         HuffmanCompressor.decompress(compressedFile, decompressedFile);
 
-        /*FileReader expectedFileReader = new FileReader(expectedOutputFile);
+        FileReader expectedFileReader = new FileReader(expectedOutputFile);
         BufferedReader expectedBufferedReader = new BufferedReader(expectedFileReader);
 
         FileReader actualFileReader = new FileReader(decompressedFile);
@@ -58,6 +58,6 @@ class HuffmanCompressorTest {
             expectedLine = expectedBufferedReader.readLine();
             actualLine = actualBufferedReader.readLine();
             assertEquals(expectedLine, actualLine);
-        }*/
+        }
     }
 }

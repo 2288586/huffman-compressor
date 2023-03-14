@@ -1,6 +1,7 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -111,7 +112,10 @@ public class TreeBuilder {
 
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-                outputStream.write(CodeConverter.getBytes(currentCharacterNode.characterCode));
+                byte[] currentCharacterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
+                System.out.println("Tree Node Character Code: " + currentCharacterNode.characterCode);
+                System.out.println("Tree Node Character Bytes: " + Arrays.toString(currentCharacterBytes));
+                outputStream.write(currentCharacterBytes);
                 outputStream.write(CodeConverter.getBytes('|'));
 
             } else {
@@ -119,7 +123,8 @@ public class TreeBuilder {
                     break;
                 }
 
-                outputStream.write(CodeConverter.getBytes("ND"));
+                outputStream.write(CodeConverter.getBytes('N'));
+                outputStream.write(CodeConverter.getBytes('D'));
                 outputStream.write(CodeConverter.getBytes('|'));
             }
 
@@ -127,7 +132,8 @@ public class TreeBuilder {
             currentNode = currentNode.parentNode;
         }
 
-        outputStream.write(CodeConverter.getBytes("FS"));
+        outputStream.write(CodeConverter.getBytes('F'));
+        outputStream.write(CodeConverter.getBytes('S'));
     }
 
     public static Node deserialize(InputStream inputStream) throws Exception {
@@ -135,10 +141,10 @@ public class TreeBuilder {
             throw new IllegalArgumentException("Reader must be specified.");
         }
 
-        Character currentCharacterValueOne;
-        Character currentCharacterValueTwo;
+        int currentCharacterCodeOne;
+        int currentCharacterCodeTwo;
 
-        byte[] characterBytes = new byte[Settings.CharacterSize];
+        byte[] characterBytes = new byte[Settings.CompressionCharacterSize];
 
         Stack<Node> nodeTree = new Stack<>();
         Node leftNode;
@@ -147,12 +153,12 @@ public class TreeBuilder {
 
         while (true) {
             inputStream.read(characterBytes);
-            currentCharacterValueOne = CodeConverter.getCharacter(characterBytes);
+            currentCharacterCodeOne = CodeConverter.getInteger(characterBytes);
 
             inputStream.read(characterBytes);
-            currentCharacterValueTwo = CodeConverter.getCharacter(characterBytes);
+            currentCharacterCodeTwo = CodeConverter.getInteger(characterBytes);
 
-            if (currentCharacterValueOne == 'F' && currentCharacterValueTwo == 'S') {
+            if (currentCharacterCodeOne == 'F' && currentCharacterCodeTwo == 'S') {
                 if (nodeTree.size() == 0) {
                     return new Node();
                 }
@@ -179,7 +185,7 @@ public class TreeBuilder {
                 return rootNode;
             }
 
-            if (currentCharacterValueOne == 'N' && currentCharacterValueTwo == 'D') {
+            if (currentCharacterCodeOne == 'N' && currentCharacterCodeTwo == 'D') {
                 rightNode = nodeTree.pop();
                 leftNode = nodeTree.pop();
 
@@ -192,7 +198,7 @@ public class TreeBuilder {
                 continue;
             }
 
-            CharacterNode characterNode = new CharacterNode(currentCharacterValueOne);
+            CharacterNode characterNode = new CharacterNode(currentCharacterCodeOne);
             nodeTree.add(characterNode);
         }
     }

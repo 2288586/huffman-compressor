@@ -35,49 +35,57 @@ public class CodeConverter {
         return binaryCode;
     }
 
-    public static byte[] getBytes(String input) throws Exception {
+    public static byte[] getBytes(String input, String charset) throws Exception {
         try {
-            byte[] result = input.getBytes(Settings.Charset);
+            byte[] result = input.getBytes(charset);
             return result;
         } catch (UnsupportedEncodingException exception) {
             throw new Exception(exception.getMessage());
         }
     }
 
-    public static byte[] getBytes(Character input) throws Exception {
-        return getBytes(input.toString());
+    public static byte[] getBytes(Character input, String charset) throws Exception {
+        return getBytes(input.toString(), charset);
     }
 
     public static byte[] getBytes(int input) {
-        byte[] result = new byte[]{
-                (byte) ((input >> 24) & 0xFF),
-                (byte) ((input >> 16) & 0xFF),
-                (byte) ((input >> 8) & 0xFF),
-                (byte) (input & 0xFF)
-        };
+        byte[] result = new byte[4];
+        int length = 4;
+        int shift = 0;
+
+        while (length > 0) {
+            length--;
+            result[length] = (byte) ((input >> shift) & 0xFF);
+            shift += 8;
+        }
 
         return result;
     }
 
-    public static String getString(byte[] input) throws Exception {
+    public static String getString(byte[] input, String charset) throws Exception {
         try {
-            String result = new String(input, Settings.Charset);
+            String result = new String(input, charset);
             return result;
         } catch (UnsupportedEncodingException exception) {
             throw new Exception(exception.getMessage());
         }
     }
 
-    public static Character getCharacter(byte[] input) throws Exception {
-        Character result = getString(input).charAt(0);
+    public static Character getCharacter(byte[] input, String charset) throws Exception {
+        Character result = getString(input, charset).charAt(0);
         return result;
     }
 
     public static int getInteger(byte[] input) {
-        int result = input[3] & 0xFF |
-                (input[2] & 0xFF) << 8 |
-                (input[1] & 0xFF) << 16 |
-                (input[0] & 0xFF) << 24;
+        int result = 0;
+        int length = input.length;
+        int shift = 0;
+
+        while (length > 0) {
+            length--;
+            result = result | ((input[length] & 0xFF) << shift);
+            shift += 8;
+        }
 
         return result;
     }

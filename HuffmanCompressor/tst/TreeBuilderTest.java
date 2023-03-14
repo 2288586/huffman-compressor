@@ -2,13 +2,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -117,8 +112,22 @@ class TreeBuilderTest {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         TreeBuilder.serialize(byteArrayOutputStream, new Node());
 
+        byte[] fBytes = CodeConverter.getBytes('F');
+        byte[] sBytes = CodeConverter.getBytes('S');
+        byte[] fsBytes = new byte[8];
+
+        fsBytes[0] = fBytes[0];
+        fsBytes[1] = fBytes[1];
+        fsBytes[2] = fBytes[2];
+        fsBytes[3] = fBytes[3];
+
+        fsBytes[4] = sBytes[0];
+        fsBytes[5] = sBytes[1];
+        fsBytes[6] = sBytes[2];
+        fsBytes[7] = sBytes[3];
+
         byteArrayOutputStream.close();
-        assertEquals("FS", byteArrayOutputStream.toString(Settings.Charset));
+        assertEquals(Arrays.toString(fsBytes), Arrays.toString(byteArrayOutputStream.toByteArray()));
     }
 
     @Test
@@ -129,7 +138,21 @@ class TreeBuilderTest {
 
     @Test
     void deserializeEmptyNode() throws Exception {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(CodeConverter.getBytes("FS"));
+        byte[] fBytes = CodeConverter.getBytes('F');
+        byte[] sBytes = CodeConverter.getBytes('S');
+        byte[] fsBytes = new byte[8];
+
+        fsBytes[0] = fBytes[0];
+        fsBytes[1] = fBytes[1];
+        fsBytes[2] = fBytes[2];
+        fsBytes[3] = fBytes[3];
+
+        fsBytes[4] = sBytes[0];
+        fsBytes[5] = sBytes[1];
+        fsBytes[6] = sBytes[2];
+        fsBytes[7] = sBytes[3];
+
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fsBytes);
         Node node = TreeBuilder.deserialize(byteArrayInputStream);
 
         byteArrayInputStream.close();

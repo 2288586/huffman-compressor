@@ -23,7 +23,7 @@ public class HuffmanCompressor {
 
             Node rootNode = TreeBuilder.build(characterCount);
             Map<Integer, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
-            System.out.println(characterCode);
+            System.out.println("Character Codes: " + characterCode);
 
             compressToFile(decompressedFile, compressedFile, rootNode, characterCode, totalCharacterCount);
 
@@ -41,7 +41,7 @@ public class HuffmanCompressor {
             fileOutputStream.write(CodeConverter.getBytes(totalCharacterCount));
 
             int currentCharacterCode;
-            byte[] currentCharacterBytes = new byte[Settings.CharacterSize];
+            byte[] currentCharacterBytes = new byte[Settings.InputCharacterSize];
 
             LinkedList<Integer> buffer = new LinkedList<>();
 
@@ -111,13 +111,13 @@ public class HuffmanCompressor {
             Node currentNode = rootNode;
             System.out.println(TreeBuilder.parse(rootNode));
 
-            byte[] totalCharacterCountBytes = new byte[Settings.CharacterSize];
+            byte[] totalCharacterCountBytes = new byte[Settings.CompressionCharacterSize];
             fileInputStream.read(totalCharacterCountBytes);
             int totalCharacterCount = CodeConverter.getInteger(totalCharacterCountBytes);
             System.out.println("Total Character Count: " + totalCharacterCount);
 
             int currentCharacterCode;
-            byte[] currentCharacterBytes = new byte[Settings.CharacterSize];
+            byte[] currentCharacterBytes = new byte[Settings.CompressionCharacterSize];
             List<Integer> currentCharacterBinaryCode;
             LinkedList<Integer> buffer = new LinkedList<>();
 
@@ -139,7 +139,13 @@ public class HuffmanCompressor {
                         if (currentNode instanceof CharacterNode) {
                             CharacterNode currentCharacterNode = (CharacterNode) currentNode;
 
-                            fileOutputStream.write(CodeConverter.getBytes(currentCharacterNode.characterCode));
+                            byte[] characterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
+                            int shift = Settings.CompressionCharacterSize - Settings.InputCharacterSize;
+
+                            for (int j = 0; j < Settings.InputCharacterSize; j++) {
+                                fileOutputStream.write(characterBytes[shift]);
+                                shift++;
+                            }
                             totalCharacterCount--;
 
                             if (totalCharacterCount == 0) {

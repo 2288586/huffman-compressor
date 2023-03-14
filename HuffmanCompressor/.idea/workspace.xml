@@ -57,7 +57,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in HuffmanCompressor">
+  <component name="RunManager" selected="Application.MainDecompress">
     <configuration name="MainCompress" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="HuffmanCompressor" />
@@ -108,16 +108,49 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CodeConverterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="HuffmanCompressor" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="CodeConverterTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HuffmanCompressorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="HuffmanCompressor" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="HuffmanCompressorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TreeBuilderTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="HuffmanCompressor" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TreeBuilderTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.MainDecompress" />
       <item itemvalue="Application.MainCompress" />
       <item itemvalue="JUnit.All in HuffmanCompressor" />
+      <item itemvalue="JUnit.CodeConverterTest" />
+      <item itemvalue="JUnit.HuffmanCompressorTest" />
+      <item itemvalue="JUnit.TreeBuilderTest" />
       <item itemvalue="JUnit.CharacterCounterTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainCompress" />
+        <item itemvalue="JUnit.TreeBuilderTest" />
+        <item itemvalue="JUnit.CodeConverterTest" />
         <item itemvalue="JUnit.CharacterCounterTest" />
+        <item itemvalue="JUnit.HuffmanCompressorTest" />
       </list>
     </recent_temporary>
   </component>
@@ -148,6 +181,9 @@
       <workItem from="1678735671025" duration="1941000" />
       <workItem from="1678737643462" duration="2599000" />
       <workItem from="1678752472494" duration="3580000" />
+      <workItem from="1678823361202" duration="4586000" />
+      <workItem from="1678827965683" duration="6160000" />
+      <workItem from="1678835154875" duration="649000" />
     </task>
     <servers />
   </component>
