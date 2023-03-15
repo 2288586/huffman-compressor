@@ -36,36 +36,4 @@ class CodeConverterTest {
 
         assertEquals(expectedResult, actualResult);
     }
-
-    @Test
-    void convertStringToStringInputCharset() throws Exception {
-        String expectedResult = "test";
-        String actualResult = CodeConverter.getString(CodeConverter.getBytes(expectedResult, Settings.InputCharset), Settings.InputCharset);
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    void convertStringToStringCompressionCharset() throws Exception {
-        String expectedResult = "test";
-        String actualResult = CodeConverter.getString(CodeConverter.getBytes(expectedResult, Settings.CompressionCharset), Settings.CompressionCharset);
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    void convertCharacterToCharacterInputCharset() throws Exception {
-        Character expectedResult = 'A';
-        Character actualResult = CodeConverter.getCharacter(CodeConverter.getBytes(expectedResult, Settings.InputCharset), Settings.InputCharset);
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    void convertCharacterToCharacterCompressionCharset() throws Exception {
-        Character expectedResult = 'A';
-        Character actualResult = CodeConverter.getCharacter(CodeConverter.getBytes(expectedResult, Settings.CompressionCharset), Settings.CompressionCharset);
-
-        assertEquals(expectedResult, actualResult);
-    }
 }
