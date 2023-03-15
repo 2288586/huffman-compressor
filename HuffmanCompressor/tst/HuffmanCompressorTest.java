@@ -57,4 +57,29 @@ class HuffmanCompressorTest {
             assertEquals(expectedLine, actualLine);
         }
     }
+
+    @Test
+    void compressDecompressImage() throws Exception {
+        File expectedOutputFile = new File("tst/HuffmanCompressorTest_InputImage.png");
+        File compressedFile = new File("tst/HuffmanCompressorTest_CompressedImage.png");
+        File decompressedFile = new File("tst/HuffmanCompressorTest_DecompressedImage.png");
+
+        HuffmanCompressor.compress(expectedOutputFile, compressedFile);
+        HuffmanCompressor.decompress(compressedFile, decompressedFile);
+
+        FileReader expectedFileReader = new FileReader(expectedOutputFile);
+        BufferedReader expectedBufferedReader = new BufferedReader(expectedFileReader);
+
+        FileReader actualFileReader = new FileReader(decompressedFile);
+        BufferedReader actualBufferedReader = new BufferedReader(actualFileReader);
+
+        String expectedLine = "";
+        String actualLine;
+
+        while (expectedLine != null) {
+            expectedLine = expectedBufferedReader.readLine();
+            actualLine = actualBufferedReader.readLine();
+            assertEquals(expectedLine, actualLine);
+        }
+    }
 }
