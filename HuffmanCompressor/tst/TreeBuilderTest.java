@@ -25,14 +25,14 @@ class TreeBuilderTest {
 
     @Test
     void buildTree() {
-        HashMap<Integer, Integer> characterCount = new HashMap<>();
-        characterCount.put(CodeConverter.getInteger('A'), 1);
-        characterCount.put(CodeConverter.getInteger('B'), 3);
-        characterCount.put(CodeConverter.getInteger('C'), 2);
+        HashMap<Byte, Integer> characterCount = new HashMap<>();
+        characterCount.put(CodeConverter.getByte('A'), 1);
+        characterCount.put(CodeConverter.getByte('B'), 3);
+        characterCount.put(CodeConverter.getByte('C'), 2);
 
-        CharacterNode nodeA = new CharacterNode(CodeConverter.getInteger('A'), 1, null, null, null);
-        CharacterNode nodeB = new CharacterNode(CodeConverter.getInteger('B'), 3, null, null, null);
-        CharacterNode nodeC = new CharacterNode(CodeConverter.getInteger('C'), 2, null, null, null);
+        CharacterNode nodeA = new CharacterNode(CodeConverter.getByte('A'), 1, null, null, null);
+        CharacterNode nodeB = new CharacterNode(CodeConverter.getByte('B'), 3, null, null, null);
+        CharacterNode nodeC = new CharacterNode(CodeConverter.getByte('C'), 2, null, null, null);
 
         Node nodeAC = new Node(3, null, nodeA, nodeC);
         nodeA.setParent(nodeAC);
@@ -48,28 +48,28 @@ class TreeBuilderTest {
 
     @Test
     void parseNullTree() {
-        HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
-        HashMap<Integer, ArrayList<Integer>> actualMap = TreeBuilder.parse(null);
+        HashMap<Byte, ArrayList<Integer>> expectedMap = new HashMap<>();
+        HashMap<Byte, ArrayList<Integer>> actualMap = TreeBuilder.parse(null);
         assertEquals(expectedMap, actualMap);
     }
 
     @Test
     void parseSingleNodeTree() {
-        HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
+        HashMap<Byte, ArrayList<Integer>> expectedMap = new HashMap<>();
         ArrayList<Integer> expectedCharacterPath = new ArrayList<>();
         expectedCharacterPath.add(0);
-        expectedMap.put(CodeConverter.getInteger('A'), expectedCharacterPath);
+        expectedMap.put(CodeConverter.getByte('A'), expectedCharacterPath);
 
-        CharacterNode characterNode = new CharacterNode(CodeConverter.getInteger('A'), 1, null, null, null);
+        CharacterNode characterNode = new CharacterNode(CodeConverter.getByte('A'), 1, null, null, null);
         Node rootNode = new Node(1, null, characterNode, null);
 
-        HashMap<Integer, ArrayList<Integer>> actualMap = TreeBuilder.parse(rootNode);
+        HashMap<Byte, ArrayList<Integer>> actualMap = TreeBuilder.parse(rootNode);
         assertEquals(expectedMap, actualMap);
     }
 
     @Test
     void parseTree() {
-        HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
+        HashMap<Byte, ArrayList<Integer>> expectedMap = new HashMap<>();
 
         ArrayList<Integer> expectedArrayListA = new ArrayList<>();
         expectedArrayListA.add(0);
@@ -80,17 +80,17 @@ class TreeBuilderTest {
         expectedArrayListC.add(0);
         expectedArrayListC.add(1);
 
-        expectedMap.put(CodeConverter.getInteger('A'), expectedArrayListA);
-        expectedMap.put(CodeConverter.getInteger('B'), expectedArrayListB);
-        expectedMap.put(CodeConverter.getInteger('C'), expectedArrayListC);
+        expectedMap.put(CodeConverter.getByte('A'), expectedArrayListA);
+        expectedMap.put(CodeConverter.getByte('B'), expectedArrayListB);
+        expectedMap.put(CodeConverter.getByte('C'), expectedArrayListC);
 
-        HashMap<Integer, Integer> characterCount = new HashMap<>();
-        characterCount.put(CodeConverter.getInteger('A'), 1);
-        characterCount.put(CodeConverter.getInteger('B'), 3);
-        characterCount.put(CodeConverter.getInteger('C'), 2);
+        HashMap<Byte, Integer> characterCount = new HashMap<>();
+        characterCount.put(CodeConverter.getByte('A'), 1);
+        characterCount.put(CodeConverter.getByte('B'), 3);
+        characterCount.put(CodeConverter.getByte('C'), 2);
         Node rootNode = TreeBuilder.build(characterCount);
 
-        HashMap<Integer, ArrayList<Integer>> actualMap = TreeBuilder.parse(rootNode);
+        HashMap<Byte, ArrayList<Integer>> actualMap = TreeBuilder.parse(rootNode);
         assertEquals(expectedMap, actualMap);
     }
 
@@ -140,9 +140,9 @@ class TreeBuilderTest {
 
     @Test
     void serializeDeserializeNode() throws Exception {
-        CharacterNode nodeA = new CharacterNode('A', 0, null, null, null);
-        CharacterNode nodeB = new CharacterNode('B', 0, null, null, null);
-        CharacterNode nodeC = new CharacterNode('C', 0, null, null, null);
+        CharacterNode nodeA = new CharacterNode(CodeConverter.getByte('A'), 0, null, null, null);
+        CharacterNode nodeB = new CharacterNode(CodeConverter.getByte('B'), 0, null, null, null);
+        CharacterNode nodeC = new CharacterNode(CodeConverter.getByte('C'), 0, null, null, null);
 
         Node nodeAC = new Node(0, null, nodeA, nodeC);
         nodeA.setParent(nodeAC);

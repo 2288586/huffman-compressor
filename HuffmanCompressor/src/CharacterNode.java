@@ -1,12 +1,12 @@
 public class CharacterNode extends Node {
-    protected int characterCode;
+    protected byte characterCode;
 
-    CharacterNode(int characterCode) {
+    CharacterNode(byte characterCode) {
         super();
         this.characterCode = characterCode;
     }
 
-    CharacterNode(int characterCode, int weight, Node parentNode, Node leftNode, Node rightNode) {
+    CharacterNode(byte characterCode, int weight, Node parentNode, Node leftNode, Node rightNode) {
         super(weight, parentNode, leftNode, rightNode);
         this.characterCode = characterCode;
     }

@@ -111,8 +111,14 @@
     </configuration>
     <configuration name="CodeConverterTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="HuffmanCompressor" />
+      <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+        <option name="credential" />
+        <option name="region" />
+        <option name="useCurrentConnection" value="false" />
+      </extension>
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="CodeConverterTest" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -140,18 +146,18 @@
       <item itemvalue="Application.MainDecompress" />
       <item itemvalue="Application.MainCompress" />
       <item itemvalue="JUnit.All in HuffmanCompressor" />
-      <item itemvalue="JUnit.CodeConverterTest" />
       <item itemvalue="JUnit.HuffmanCompressorTest" />
+      <item itemvalue="JUnit.CodeConverterTest" />
       <item itemvalue="JUnit.TreeBuilderTest" />
       <item itemvalue="JUnit.CharacterCounterTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainCompress" />
+        <item itemvalue="JUnit.HuffmanCompressorTest" />
         <item itemvalue="JUnit.TreeBuilderTest" />
         <item itemvalue="JUnit.CharacterCounterTest" />
         <item itemvalue="JUnit.CodeConverterTest" />
-        <item itemvalue="JUnit.HuffmanCompressorTest" />
       </list>
     </recent_temporary>
   </component>
@@ -189,7 +195,7 @@
       <workItem from="1678840088106" duration="547000" />
       <workItem from="1678840797145" duration="58000" />
       <workItem from="1678841207379" duration="754000" />
-      <workItem from="1678842514845" duration="901000" />
+      <workItem from="1678842514845" duration="3080000" />
     </task>
     <servers />
   </component>

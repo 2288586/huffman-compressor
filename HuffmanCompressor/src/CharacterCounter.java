@@ -10,14 +10,16 @@ public class CharacterCounter {
             throw new IllegalArgumentException("File must be specified.");
         }
 
-        HashMap<Integer, Integer> characterCount = new HashMap<>();
+        HashMap<Byte, Integer> characterCount = new HashMap<>();
         int totalCharacterCount = 0;
 
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
-            int characterCode;
+            int readInt;
+            byte characterCode;
 
-            while ((characterCode = fileInputStream.read()) != -1) {
+            while ((readInt = fileInputStream.read()) != -1) {
+                characterCode = CodeConverter.getByte(readInt);
                 if (characterCount.containsKey(characterCode)) {
                     characterCount.put(characterCode, characterCount.get(characterCode) + 1);
 

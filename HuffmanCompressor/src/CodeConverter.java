@@ -48,6 +48,11 @@ public class CodeConverter {
         return result;
     }
 
+    public static byte getByte(int input) {
+        byte result = getBytes(input)[3];
+        return result;
+    }
+
     public static int getInteger(byte[] input) {
         int result = 0;
         int length = input.length;

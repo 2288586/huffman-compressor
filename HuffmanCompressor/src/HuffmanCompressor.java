@@ -16,14 +16,14 @@ public class HuffmanCompressor {
 
         try {
             CharacterCountResult characterCountResult = CharacterCounter.count(decompressedFile);
-            Map<Integer, Integer> characterCount = characterCountResult.getCharacterCount();
+            Map<Byte, Integer> characterCount = characterCountResult.getCharacterCount();
             Logger.log("Character Count: " + characterCount);
             int totalCharacterCount = characterCountResult.getTotalCharacterCount();
             Logger.log("Total Character Count: " + totalCharacterCount + "\n");
 
             Node rootNode = TreeBuilder.build(characterCount);
             Logger.log("Character Code Tree: " + rootNode);
-            Map<Integer, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
+            Map<Byte, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
             Logger.log("Character Codes: " + characterCode + "\n");
 
             compressToFile(decompressedFile, compressedFile, rootNode, characterCode, totalCharacterCount);
@@ -33,7 +33,7 @@ public class HuffmanCompressor {
         }
     }
 
-    private static void compressToFile(File decompressedFile, File compressedFile, Node rootNode, Map<Integer, ArrayList<Integer>> characterCode, int totalCharacterCount) throws Exception {
+    private static void compressToFile(File decompressedFile, File compressedFile, Node rootNode, Map<Byte, ArrayList<Integer>> characterCode, int totalCharacterCount) throws Exception {
         try {
             FileInputStream fileInputStream = new FileInputStream(decompressedFile);
             FileOutputStream fileOutputStream = new FileOutputStream(compressedFile);
@@ -41,10 +41,12 @@ public class HuffmanCompressor {
             TreeBuilder.serialize(fileOutputStream, rootNode);
             fileOutputStream.write(CodeConverter.getBytes(totalCharacterCount));
 
-            int currentCharacterCode;
+            int readInt;
+            byte currentCharacterCode;
             LinkedList<Integer> buffer = new LinkedList<>();
 
-            while ((currentCharacterCode = fileInputStream.read()) != -1) {
+            while ((readInt = fileInputStream.read()) != -1) {
+                currentCharacterCode = CodeConverter.getByte(readInt);
                 buffer.addAll(characterCode.get(currentCharacterCode));
 
                 while (buffer.size() >= CodeConverter.CodeSize) {
@@ -138,9 +140,7 @@ public class HuffmanCompressor {
 
                         if (currentNode instanceof CharacterNode) {
                             CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-
-                            byte[] characterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
-                            fileOutputStream.write(characterBytes[3]);
+                            fileOutputStream.write(currentCharacterNode.characterCode);
                             totalCharacterCount--;
 
                             if (totalCharacterCount == 0) {

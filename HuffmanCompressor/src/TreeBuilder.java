@@ -1,7 +1,6 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -11,7 +10,7 @@ import java.util.TreeSet;
 
 public class TreeBuilder {
 
-    public static Node build(Map<Integer, Integer> characterCount) {
+    public static Node build(Map<Byte, Integer> characterCount) {
         if (characterCount == null) {
             throw new IllegalArgumentException("Character count must be specified.");
         }
@@ -28,7 +27,7 @@ public class TreeBuilder {
             }
         });
 
-        for (Integer characterCode : characterCount.keySet()) {
+        for (Byte characterCode : characterCount.keySet()) {
             nodes.add(new CharacterNode(characterCode, characterCount.get(characterCode), null, null, null));
         }
 
@@ -49,8 +48,8 @@ public class TreeBuilder {
         return nodes.pollFirst();
     }
 
-    public static HashMap<Integer, ArrayList<Integer>> parse(Node rootNode) {
-        HashMap<Integer, ArrayList<Integer>> characterCode = new HashMap<>();
+    public static HashMap<Byte, ArrayList<Integer>> parse(Node rootNode) {
+        HashMap<Byte, ArrayList<Integer>> characterCode = new HashMap<>();
         LinkedList<Integer> currentPath = new LinkedList<>();
 
         HashSet<Node> processedNodes = new HashSet<>();
@@ -112,10 +111,8 @@ public class TreeBuilder {
 
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
-                byte[] currentCharacterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
                 Logger.log("Tree Node Character Code: " + currentCharacterNode.characterCode);
-                Logger.log("Tree Node Character Bytes: " + Arrays.toString(currentCharacterBytes) + "\n");
-                outputStream.write(currentCharacterBytes[3]);
+                outputStream.write(currentCharacterNode.characterCode);
                 outputStream.write('|');
 
             } else {
@@ -141,8 +138,8 @@ public class TreeBuilder {
             throw new IllegalArgumentException("Reader must be specified.");
         }
 
-        int currentCharacterCodeOne;
-        int currentCharacterCodeTwo;
+        byte currentCharacterCodeOne;
+        byte currentCharacterCodeTwo;
 
         Stack<Node> nodeTree = new Stack<>();
         Node leftNode;
@@ -150,8 +147,8 @@ public class TreeBuilder {
         Node rootNode;
 
         while (true) {
-            currentCharacterCodeOne = inputStream.read();
-            currentCharacterCodeTwo = inputStream.read();
+            currentCharacterCodeOne = CodeConverter.getByte(inputStream.read());
+            currentCharacterCodeTwo = CodeConverter.getByte(inputStream.read());
 
             if (currentCharacterCodeOne == 'F' && currentCharacterCodeTwo == 'S') {
                 if (nodeTree.size() == 0) {

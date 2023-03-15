@@ -29,7 +29,7 @@ class CharacterCounterTest {
         HashMap<Integer, Integer> expectedCharacterCount = new HashMap<>();
         CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
 
-        Map<Integer, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
+        Map<Byte, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
         int actualTotalCharacterCount = actualCharacterCountResult.getTotalCharacterCount();
 
         assertEquals(expectedCharacterCount, actualCharacterCount);
@@ -40,22 +40,22 @@ class CharacterCounterTest {
     void countNonEmptyFile() throws Exception {
         File file = new File("tst/CharacterCounterTest_NonEmptyFile.txt");
 
-        HashMap<Integer, Integer> expectedCharacterCount = new HashMap<>();
-        expectedCharacterCount.put(CodeConverter.getInteger(' '), 10);
-        expectedCharacterCount.put(CodeConverter.getInteger('A'), 5);
-        expectedCharacterCount.put(CodeConverter.getInteger('a'), 5);
-        expectedCharacterCount.put(CodeConverter.getInteger('B'), 3);
-        expectedCharacterCount.put(CodeConverter.getInteger('b'), 3);
-        expectedCharacterCount.put(CodeConverter.getInteger('C'), 1);
-        expectedCharacterCount.put(CodeConverter.getInteger('c'), 1);
-        expectedCharacterCount.put(CodeConverter.getInteger('.'), 1);
-        expectedCharacterCount.put(CodeConverter.getInteger('\n'), 3);
+        HashMap<Byte, Integer> expectedCharacterCount = new HashMap<>();
+        expectedCharacterCount.put(CodeConverter.getByte(' '), 10);
+        expectedCharacterCount.put(CodeConverter.getByte('A'), 5);
+        expectedCharacterCount.put(CodeConverter.getByte('a'), 5);
+        expectedCharacterCount.put(CodeConverter.getByte('B'), 3);
+        expectedCharacterCount.put(CodeConverter.getByte('b'), 3);
+        expectedCharacterCount.put(CodeConverter.getByte('C'), 1);
+        expectedCharacterCount.put(CodeConverter.getByte('c'), 1);
+        expectedCharacterCount.put(CodeConverter.getByte('.'), 1);
+        expectedCharacterCount.put(CodeConverter.getByte('\n'), 3);
 
         CharacterCountResult actualCharacterCountResult = CharacterCounter.count(file);
-        Map<Integer, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
+        Map<Byte, Integer> actualCharacterCount = actualCharacterCountResult.getCharacterCount();
 
         //UTF-16 Encoding Contains Byte-Order Mark (BOM), Character Code = 65279, Unicode Symbol = ﻿
-        for (Integer characterCode : expectedCharacterCount.keySet()) {
+        for (Byte characterCode : expectedCharacterCount.keySet()) {
             assertTrue(actualCharacterCount.containsKey(characterCode));
             assertTrue(actualCharacterCount.containsValue(expectedCharacterCount.get(characterCode)));
         }
