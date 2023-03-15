@@ -115,25 +115,25 @@ public class TreeBuilder {
                 byte[] currentCharacterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
                 Logger.log("Tree Node Character Code: " + currentCharacterNode.characterCode);
                 Logger.log("Tree Node Character Bytes: " + Arrays.toString(currentCharacterBytes) + "\n");
-                outputStream.write(currentCharacterBytes);
-                outputStream.write(CodeConverter.getBytes('|'));
+                outputStream.write(currentCharacterBytes[3]);
+                outputStream.write('|');
 
             } else {
                 if (currentNode.parentNode == null) {
                     break;
                 }
 
-                outputStream.write(CodeConverter.getBytes('N'));
-                outputStream.write(CodeConverter.getBytes('D'));
-                outputStream.write(CodeConverter.getBytes('|'));
+                outputStream.write('N');
+                outputStream.write('D');
+                outputStream.write('|');
             }
 
             processedNodes.add(currentNode);
             currentNode = currentNode.parentNode;
         }
 
-        outputStream.write(CodeConverter.getBytes('F'));
-        outputStream.write(CodeConverter.getBytes('S'));
+        outputStream.write('F');
+        outputStream.write('S');
     }
 
     public static Node deserialize(InputStream inputStream) throws Exception {
@@ -144,19 +144,14 @@ public class TreeBuilder {
         int currentCharacterCodeOne;
         int currentCharacterCodeTwo;
 
-        byte[] characterBytes = new byte[Settings.CompressionCharacterSize];
-
         Stack<Node> nodeTree = new Stack<>();
         Node leftNode;
         Node rightNode;
         Node rootNode;
 
         while (true) {
-            inputStream.read(characterBytes);
-            currentCharacterCodeOne = CodeConverter.getInteger(characterBytes);
-
-            inputStream.read(characterBytes);
-            currentCharacterCodeTwo = CodeConverter.getInteger(characterBytes);
+            currentCharacterCodeOne = inputStream.read();
+            currentCharacterCodeTwo = inputStream.read();
 
             if (currentCharacterCodeOne == 'F' && currentCharacterCodeTwo == 'S') {
                 if (nodeTree.size() == 0) {
@@ -194,7 +189,7 @@ public class TreeBuilder {
                 rightNode.parentNode = node;
 
                 nodeTree.add(node);
-                inputStream.read(characterBytes);
+                inputStream.read();
                 continue;
             }
 

@@ -111,19 +111,9 @@ class TreeBuilderTest {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         TreeBuilder.serialize(byteArrayOutputStream, new Node());
 
-        byte[] fBytes = CodeConverter.getBytes('F');
-        byte[] sBytes = CodeConverter.getBytes('S');
-        byte[] fsBytes = new byte[8];
-
-        fsBytes[0] = fBytes[0];
-        fsBytes[1] = fBytes[1];
-        fsBytes[2] = fBytes[2];
-        fsBytes[3] = fBytes[3];
-
-        fsBytes[4] = sBytes[0];
-        fsBytes[5] = sBytes[1];
-        fsBytes[6] = sBytes[2];
-        fsBytes[7] = sBytes[3];
+        byte[] fsBytes = new byte[2];
+        fsBytes[0] = 'F';
+        fsBytes[1] = 'S';
 
         byteArrayOutputStream.close();
         assertEquals(Arrays.toString(fsBytes), Arrays.toString(byteArrayOutputStream.toByteArray()));
@@ -137,19 +127,9 @@ class TreeBuilderTest {
 
     @Test
     void deserializeEmptyNode() throws Exception {
-        byte[] fBytes = CodeConverter.getBytes('F');
-        byte[] sBytes = CodeConverter.getBytes('S');
-        byte[] fsBytes = new byte[8];
-
-        fsBytes[0] = fBytes[0];
-        fsBytes[1] = fBytes[1];
-        fsBytes[2] = fBytes[2];
-        fsBytes[3] = fBytes[3];
-
-        fsBytes[4] = sBytes[0];
-        fsBytes[5] = sBytes[1];
-        fsBytes[6] = sBytes[2];
-        fsBytes[7] = sBytes[3];
+        byte[] fsBytes = new byte[2];
+        fsBytes[0] = 'F';
+        fsBytes[1] = 'S';
 
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fsBytes);
         Node node = TreeBuilder.deserialize(byteArrayInputStream);

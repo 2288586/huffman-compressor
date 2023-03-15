@@ -149,8 +149,8 @@
       <list>
         <item itemvalue="Application.MainCompress" />
         <item itemvalue="JUnit.TreeBuilderTest" />
-        <item itemvalue="JUnit.CodeConverterTest" />
         <item itemvalue="JUnit.CharacterCounterTest" />
+        <item itemvalue="JUnit.CodeConverterTest" />
         <item itemvalue="JUnit.HuffmanCompressorTest" />
       </list>
     </recent_temporary>
@@ -189,6 +189,7 @@
       <workItem from="1678840088106" duration="547000" />
       <workItem from="1678840797145" duration="58000" />
       <workItem from="1678841207379" duration="754000" />
+      <workItem from="1678842514845" duration="901000" />
     </task>
     <servers />
   </component>
