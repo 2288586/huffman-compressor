@@ -113,8 +113,8 @@ public class TreeBuilder {
             if (currentNode instanceof CharacterNode) {
                 CharacterNode currentCharacterNode = (CharacterNode) currentNode;
                 byte[] currentCharacterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
-                System.out.println("Tree Node Character Code: " + currentCharacterNode.characterCode);
-                System.out.println("Tree Node Character Bytes: " + Arrays.toString(currentCharacterBytes) + "\n");
+                Logger.log("Tree Node Character Code: " + currentCharacterNode.characterCode);
+                Logger.log("Tree Node Character Bytes: " + Arrays.toString(currentCharacterBytes) + "\n");
                 outputStream.write(currentCharacterBytes);
                 outputStream.write(CodeConverter.getBytes('|'));
 

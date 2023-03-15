@@ -62,7 +62,7 @@
     <configuration name="MainCompress" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="HuffmanCompressor" />
-      <option name="PROGRAM_PARAMETERS" value="-compress -fileinput InputFile.txt -fileoutput CompressedFile.txt" />
+      <option name="PROGRAM_PARAMETERS" value="-compress -fileinput InputFile.txt -fileoutput CompressedFile.txt -log true" />
       <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
         <option name="credential" />
         <option name="region" />
@@ -75,7 +75,7 @@
     <configuration name="MainDecompress" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="HuffmanCompressor" />
-      <option name="PROGRAM_PARAMETERS" value="-decompress -fileinput CompressedFile.txt -fileoutput DecompressedFile.txt" />
+      <option name="PROGRAM_PARAMETERS" value="-decompress -fileinput CompressedFile.txt -fileoutput DecompressedFile.txt -log true" />
       <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
         <option name="credential" />
         <option name="region" />
@@ -184,7 +184,7 @@
       <workItem from="1678752472494" duration="3580000" />
       <workItem from="1678823361202" duration="4586000" />
       <workItem from="1678827965683" duration="6160000" />
-      <workItem from="1678835154875" duration="2860000" />
+      <workItem from="1678835154875" duration="3658000" />
     </task>
     <servers />
   </component>

@@ -17,14 +17,14 @@ public class HuffmanCompressor {
         try {
             CharacterCountResult characterCountResult = CharacterCounter.count(decompressedFile);
             Map<Integer, Integer> characterCount = characterCountResult.getCharacterCount();
-            System.out.println("Character Count: " + characterCount);
+            Logger.log("Character Count: " + characterCount);
             int totalCharacterCount = characterCountResult.getTotalCharacterCount();
-            System.out.println("Total Character Count: " + totalCharacterCount + "\n");
+            Logger.log("Total Character Count: " + totalCharacterCount + "\n");
 
             Node rootNode = TreeBuilder.build(characterCount);
-            System.out.println("Character Code Tree: " + rootNode);
+            Logger.log("Character Code Tree: " + rootNode);
             Map<Integer, ArrayList<Integer>> characterCode = TreeBuilder.parse(rootNode);
-            System.out.println("Character Codes: " + characterCode + "\n");
+            Logger.log("Character Codes: " + characterCode + "\n");
 
             compressToFile(decompressedFile, compressedFile, rootNode, characterCode, totalCharacterCount);
 
@@ -57,9 +57,9 @@ public class HuffmanCompressor {
                         binaryCode.add(buffer.pollFirst());
                     }
 
-                    System.out.println("Current Character Binary Code: " + binaryCode);
+                    Logger.log("Current Character Binary Code: " + binaryCode);
                     int code = CodeConverter.convertBinaryCodeToCode(binaryCode);
-                    System.out.println("Current Character Code: " + code + "\n");
+                    Logger.log("Current Character Code: " + code + "\n");
                     fileOutputStream.write(CodeConverter.getBytes(code));
                 }
             }
@@ -71,9 +71,9 @@ public class HuffmanCompressor {
                     buffer.add(0);
                 }
 
-                System.out.println("Leftover Character Binary Code: " + buffer);
+                Logger.log("Leftover Character Binary Code: " + buffer);
                 int code = CodeConverter.convertBinaryCodeToCode(buffer);
-                System.out.println("Leftover Character Code: " + code + "\n");
+                Logger.log("Leftover Character Code: " + code + "\n");
                 fileOutputStream.write(CodeConverter.getBytes(code));
             }
 
@@ -109,14 +109,14 @@ public class HuffmanCompressor {
             FileOutputStream fileOutputStream = new FileOutputStream(decompressedFile);
 
             Node rootNode = TreeBuilder.deserialize(fileInputStream);
-            System.out.println("Character Code Tree: " + rootNode);
+            Logger.log("Character Code Tree: " + rootNode);
             Node currentNode = rootNode;
-            System.out.println("Character Codes: " + TreeBuilder.parse(rootNode));
+            Logger.log("Character Codes: " + TreeBuilder.parse(rootNode));
 
             byte[] totalCharacterCountBytes = new byte[Settings.CompressionCharacterSize];
             fileInputStream.read(totalCharacterCountBytes);
             int totalCharacterCount = CodeConverter.getInteger(totalCharacterCountBytes);
-            System.out.println("Total Character Count: " + totalCharacterCount + "\n");
+            Logger.log("Total Character Count: " + totalCharacterCount + "\n");
 
             int currentCharacterCode;
             byte[] currentCharacterBytes = new byte[Settings.CompressionCharacterSize];
@@ -126,8 +126,8 @@ public class HuffmanCompressor {
             while ((fileInputStream.read(currentCharacterBytes)) != -1) {
                 currentCharacterCode = CodeConverter.getInteger(currentCharacterBytes);
                 currentCharacterBinaryCode = CodeConverter.convertCodeToBinaryCode(currentCharacterCode);
-                System.out.println("Current Character Code: " + currentCharacterCode);
-                System.out.println("Current Character Binary Code: " + currentCharacterBinaryCode + "\n");
+                Logger.log("Current Character Code: " + currentCharacterCode);
+                Logger.log("Current Character Binary Code: " + currentCharacterBinaryCode + "\n");
                 buffer.addAll(currentCharacterBinaryCode);
 
                 if (buffer.size() > 0 && totalCharacterCount > 0) {
