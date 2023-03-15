@@ -58,7 +58,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MainDecompress">
+  <component name="RunManager" selected="JUnit.All in HuffmanCompressor">
     <configuration name="MainCompress" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="HuffmanCompressor" />
@@ -188,6 +188,7 @@
       <workItem from="1678839966897" duration="14000" />
       <workItem from="1678840088106" duration="547000" />
       <workItem from="1678840797145" duration="58000" />
+      <workItem from="1678841207379" duration="206000" />
     </task>
     <servers />
   </component>

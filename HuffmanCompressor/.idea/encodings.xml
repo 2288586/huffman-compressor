@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/InputFile.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/CompressedFile.txt" charset="UTF-32" />
-    <file url="file://$PROJECT_DIR$/DecompressedFile.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tst/CharacterCounterTest_EmptyFile.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tst/CharacterCounterTest_NonEmptyFile.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_InputFile.txt" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_CompressedFile.txt" charset="UTF-32" />
-    <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_DecompressedFile.txt" charset="UTF-8" />
-  </component>
+    <component name="Encoding">
+        <file url="file://$PROJECT_DIR$/InputFile.txt" charset="UTF-32"/>
+        <file url="file://$PROJECT_DIR$/CompressedFile.txt" charset="UTF-32"/>
+        <file url="file://$PROJECT_DIR$/DecompressedFile.txt" charset="UTF-32"/>
+        <file url="file://$PROJECT_DIR$/tst/CharacterCounterTest_EmptyFile.txt" charset="UTF-8"/>
+        <file url="file://$PROJECT_DIR$/tst/CharacterCounterTest_NonEmptyFile.txt" charset="UTF-8"/>
+        <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_InputFile.txt" charset="UTF-32"/>
+        <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_CompressedFile.txt" charset="UTF-32"/>
+        <file url="file://$PROJECT_DIR$/tst/HuffmanCompressorTest_DecompressedFile.txt" charset="UTF-32"/>
+    </component>
 </project>
