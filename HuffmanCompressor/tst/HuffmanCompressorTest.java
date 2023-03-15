@@ -1,10 +1,8 @@
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,7 +27,6 @@ class HuffmanCompressorTest {
         assertEquals("Input and output file must be specified.", exception.getMessage());
     }
 
-
     @Test
     void decompressNullDecompressedFile() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> HuffmanCompressor.decompress(new File(""), null));
@@ -52,7 +49,7 @@ class HuffmanCompressorTest {
         BufferedReader actualBufferedReader = new BufferedReader(actualFileReader);
 
         String expectedLine = "";
-        String actualLine = "";
+        String actualLine;
 
         while (expectedLine != null) {
             expectedLine = expectedBufferedReader.readLine();

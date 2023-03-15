@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TreeBuilderTest {
 
-
     @Test
     void buildNullTree() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> TreeBuilder.build(null));
@@ -25,7 +24,7 @@ class TreeBuilderTest {
     }
 
     @Test
-    void buildTree() throws Exception {
+    void buildTree() {
         HashMap<Integer, Integer> characterCount = new HashMap<>();
         characterCount.put(CodeConverter.getInteger('A'), 1);
         characterCount.put(CodeConverter.getInteger('B'), 3);
@@ -55,7 +54,7 @@ class TreeBuilderTest {
     }
 
     @Test
-    void parseSingleNodeTree() throws Exception {
+    void parseSingleNodeTree() {
         HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
         ArrayList<Integer> expectedCharacterPath = new ArrayList<>();
         expectedCharacterPath.add(0);
@@ -69,7 +68,7 @@ class TreeBuilderTest {
     }
 
     @Test
-    void parseTree() throws Exception {
+    void parseTree() {
         HashMap<Integer, ArrayList<Integer>> expectedMap = new HashMap<>();
 
         ArrayList<Integer> expectedArrayListA = new ArrayList<>();

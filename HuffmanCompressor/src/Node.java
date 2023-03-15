@@ -1,6 +1,5 @@
 public class Node {
     protected int weight;
-
     protected Node parentNode;
     protected Node leftNode;
     protected Node rightNode;

@@ -6,7 +6,6 @@ import java.util.HashMap;
 public class CharacterCounter {
 
     public static CharacterCountResult count(File file) throws Exception {
-
         if (file == null) {
             throw new IllegalArgumentException("File must be specified.");
         }

@@ -24,7 +24,6 @@ public class Main {
             } catch (Exception exception) {
                 Logger.log(exception.getMessage());
             }
-
         }
     }
 }

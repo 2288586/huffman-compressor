@@ -154,7 +154,6 @@ public class HuffmanCompressor {
                             if (totalCharacterCount == 0) {
                                 break;
                             }
-
                             currentNode = rootNode;
                         }
                     }
