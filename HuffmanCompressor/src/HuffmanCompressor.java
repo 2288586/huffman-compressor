@@ -42,12 +42,9 @@ public class HuffmanCompressor {
             fileOutputStream.write(CodeConverter.getBytes(totalCharacterCount));
 
             int currentCharacterCode;
-            byte[] currentCharacterBytes = new byte[Settings.InputCharacterSize];
-
             LinkedList<Integer> buffer = new LinkedList<>();
 
-            while (fileInputStream.read(currentCharacterBytes) != -1) {
-                currentCharacterCode = CodeConverter.getInteger(currentCharacterBytes);
+            while ((currentCharacterCode = fileInputStream.read()) != -1) {
                 buffer.addAll(characterCode.get(currentCharacterCode));
 
                 while (buffer.size() >= CodeConverter.CodeSize) {
@@ -143,12 +140,7 @@ public class HuffmanCompressor {
                             CharacterNode currentCharacterNode = (CharacterNode) currentNode;
 
                             byte[] characterBytes = CodeConverter.getBytes(currentCharacterNode.characterCode);
-                            int shift = Settings.CompressionCharacterSize - Settings.InputCharacterSize;
-
-                            for (int j = 0; j < Settings.InputCharacterSize; j++) {
-                                fileOutputStream.write(characterBytes[shift]);
-                                shift++;
-                            }
+                            fileOutputStream.write(characterBytes[3]);
                             totalCharacterCount--;
 
                             if (totalCharacterCount == 0) {

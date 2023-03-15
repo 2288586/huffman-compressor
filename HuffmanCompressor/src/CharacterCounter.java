@@ -15,13 +15,9 @@ public class CharacterCounter {
 
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
-
             int characterCode;
-            byte[] characterBytes = new byte[Settings.InputCharacterSize];
 
-            while ((fileInputStream.read(characterBytes)) != -1) {
-
-                characterCode = CodeConverter.getInteger(characterBytes);
+            while ((characterCode = fileInputStream.read()) != -1) {
                 if (characterCount.containsKey(characterCode)) {
                     characterCount.put(characterCode, characterCount.get(characterCode) + 1);
 
